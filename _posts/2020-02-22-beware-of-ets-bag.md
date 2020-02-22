@@ -2,7 +2,7 @@
 layout: post
 title: Beware of the ETS bag
 subtitle: Performance penalty of ETS bag deduplication
-published: false
+published: true
 date: '2020-02-22'
 tags: [elixir, ets, bag]
 ---
@@ -24,7 +24,7 @@ So basically, bag can have records like:
 ]
 ```
 
-, but on the other hand `bag` guarantees uniqueness of the values, so if you reinsert record `{:key1, :value2}` you will still have 2 records in that ets table.
+and **guarantees uniqueness of the values**, so if you reinsert record `{:key1, :value2}`, table will still contain 2 records.
 
 As name suggests `duplicate_bag` allows duplication of the values under the same key:
 
@@ -113,7 +113,7 @@ bag                  8.91 K - 23.11x slower +107.33 μs
 
 As noticed, insert into a `bag` was **23 times** slower than in a duplicate bag. Wow, this is huge penalty.
 
-After this test I was wandering does it get worse with more values under the same keys? Number of initial records is still 1M, benched with `1k` unique keys and `1M` (all unique keys for values).
+After this test I was wondering does it get worse with more values under the same keys? Number of initial records is still 1M, benched with `1k` unique keys and `1M` (all unique keys for values).
 
 Benchmark showed this:
 

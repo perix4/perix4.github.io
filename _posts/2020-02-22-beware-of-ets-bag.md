@@ -113,32 +113,36 @@ bag                  8.91 K - 23.11x slower +107.33 μs
 
 As noticed, insert into a `bag` was **23 times** slower than in a duplicate bag. Wow, this is huge penalty.
 
-After this test I was wandering does it get worse with more values under the same keys? Number of initial records is still 1M, benched with `100k`, `10k`, `1k` and totally `unique` keys.
+After this test I was wandering does it get worse with more values under the same keys? Number of initial records is still 1M, benched with `1k` unique keys and `1M` (all unique keys for values).
 
 Benchmark showed this:
 
 ```
-(... same setup as above)
+Operating System: macOS
+CPU Information: Intel(R) Core(TM) i5-7267U CPU @ 3.10GHz
+Number of Available Cores: 4
+Available memory: 8 GB
+Elixir 1.9.4
+Erlang 22.2.1
 
-Name             ips     average  deviation   median  99th %
-dbag_100k   341.55 K     2.93 μs  ±1108.40%     1 μs   17 μs
-dbag_10k    325.40 K     3.07 μs  ±1404.23%     2 μs   17 μs
-dbag_1k     228.62 K     4.37 μs  ±1448.14%     2 μs   27 μs
-dbag_uniq   171.04 K     5.85 μs   ±904.50%     2 μs   37 μs
-bag_uniq      9.36 K   106.83 μs    ±35.28%   106 μs  169 μs
-bag_100k      9.23 K   108.32 μs    ±32.49%   108 μs  165 μs
-bag_10k       9.19 K   108.77 μs    ±32.64%   107 μs  171 μs
-bag_1k        8.87 K   112.77 μs    ±29.01%   114 μs  182 μs
+Benchmark suite executing with the following configuration:
+warmup: 2 s
+time: 30 s
+memory time: 0 ns
+parallel: 4
+inputs: none specified
+Estimated total run time: 1.07 min
+
+Benchmarking bag_1k...
+Benchmarking bag_uniq...
+
+Name         ips    average  deviation   median  99th %
+bag_uniq  4.96 K  201.50 μs    ±65.07%   185 μs  393 μs
+bag_1k    4.44 K  224.98 μs   ±144.82%   212 μs  474 μs
 
 Comparison:
-dbag_100k   341.55 K
-dbag_10k    325.40 K - 1.05x slower +0.145 μs
-dbag_1k     228.62 K - 1.49x slower +1.45 μs
-dbag_uniq   171.04 K - 2.00x slower +2.92 μs
-bag_uniq      9.36 K - 36.49x slower +103.91 μs
-bag_100k      9.23 K - 37.00x slower +105.39 μs
-bag_10k       9.19 K - 37.15x slower +105.84 μs
-bag_1k        8.87 K - 38.52x slower +109.84 μs
+bag_uniq  4.96 K
+bag_1k    4.44 K - 1.12x slower +23.48 μs
 ```
 &nbsp;
 

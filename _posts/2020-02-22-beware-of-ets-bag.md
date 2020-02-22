@@ -2,7 +2,7 @@
 layout: post
 title: Beware of the ETS bag
 subtitle: Performance penalty of ETS bag deduplication
-published: true
+published: false
 date: '2020-02-22'
 tags: [elixir, ets, bag]
 ---
